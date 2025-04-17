@@ -132,22 +132,6 @@ export default function ChatWindow() {
     };
   }, [currentUser]);
 
-  useEffect(() => {
-    // socket.on('get_users', (onlineUsers) => {
-    //   setOnlineUsers(onlineUsers);
-    // });
-
-    return () => {
-      socket.off('get_users');
-    };
-  }, [currentUser]);
-
-  useEffect(() => {
-    console.log('user udpated!!')
-  }, [onlineUsers]);
-
-
-
   return (
     <div className='chat-app-container'>
       <div className="chat-sidebar">
@@ -160,7 +144,7 @@ export default function ChatWindow() {
       </div>
 
       <div id="chat-window">
-        <h2>💬 Live Chat 💬</h2>
+        <h2>💬 Live Chat</h2>
         <p>🟢 {onlineUsers.length} online users</p>
         {!currentUser && (
           <div className="modal-backdrop">
@@ -204,9 +188,9 @@ export default function ChatWindow() {
                 </button>
                 <button
                   onClick={() => {
-                    localStorage.setItem('username', 'GUEST101');
+                    localStorage.setItem('username', `GUEST-${socket.id.slice(0, 5)}`);
                     console.log('username', username)
-                    dispatch(setUser('GUEST101'));
+                    dispatch(setUser(`GUEST-${socket.id.slice(0, 5)}`));
                     setUsername('');
                   }}
                   style={{
@@ -241,7 +225,9 @@ export default function ChatWindow() {
               onClick={() => {
                 localStorage.removeItem('username');
                 dispatch(setUser(''));
+                dispatch(logout())
                 setUsername('');
+                
               }}
               style={{
                 marginLeft: "1rem",

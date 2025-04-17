@@ -245,3 +245,24 @@
     display: flex;
     justify-content: space-evenly;
 }
+
+.chat-bubble {
+    max-width: 60%;
+    padding: 0.7rem 1rem;
+    border-radius: 18px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    position: relative;
+}
+
+.chat-bubble.own {
+    align-self: flex-end;
+    background-color: #2a9d8f;
+    color: white;
+}
+
+.chat-bubble.other {
+    align-self: flex-start;
+    background-color: #e0e0e0;
+    color: #333;
+}
