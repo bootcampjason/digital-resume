@@ -1,4 +1,36 @@
 /* ChatWindow.css */
+.chat-app-container {
+    display: flex;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.chat-sidebar {
+    width: 180px;
+    background-color: #20232a;
+    color: white;
+    padding: 1rem;
+    border-right: 2px solid #333;
+}
+
+.chat-sidebar h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+}
+
+.chat-sidebar ul {
+    font-size: 0.9rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: start;
+}
+
+.chat-sidebar li {
+    padding: 6px 0;
+    font-weight: 500;
+}
+
 .no-data-message {
     text-align: center;
 }
