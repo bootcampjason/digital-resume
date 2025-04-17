@@ -1,0 +1,13 @@
+# Global ignores
+node_modules/
+.env
+dist/
+build/
+
+# React
+frontend/node_modules/
+frontend/.env
+
+# Express
+backend/node_modules/
+backend/.env

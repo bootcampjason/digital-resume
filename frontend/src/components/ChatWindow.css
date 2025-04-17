@@ -1,0 +1,215 @@
+/* ChatWindow.css */
+.no-data-message {
+    text-align: center;
+}
+
+.message {
+    text-align: start;
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 8px;
+    transition: background-color 0.2s ease;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+}
+
+.message input[type="text"] {
+    font-size: 1rem;
+    padding: 4px 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 100%;
+
+    /* Animation */
+    opacity: 0;
+    transform: translateY(-5px);
+    animation: fadeInSlide 0.2s ease forwards;
+}
+
+@keyframes fadeInSlide {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+
+.message.fade-out {
+    animation: fadeOut 0.3s ease forwards;
+}
+
+.message:hover {
+    background-color: rgba(162, 162, 187, 0.111);
+    transition: background-color 0.2s ease;
+}
+
+.message:hover .action-buttons {
+    opacity: 1;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.2rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.trash-button,
+.edit-button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+
+    /* Initially hide the button */
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.message:hover .trash-button,
+.edit-button {
+    opacity: 1;
+}
+
+.trash-icon {
+    font-size: 1.2rem;
+    transition: transform 0.2s ease, color 0.2s ease;
+    color: #d83333cc;
+}
+
+.trash-icon:hover {
+    transform: scale(1.4);
+    color: #f90505;
+}
+
+.edit-icon {
+    color: #69879a;
+    font-size: 1.2rem;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.edit-icon:hover {
+    transform: scale(1.4);
+    color: #28658b;
+}
+
+.check-icon {
+    color: #2a9d8f;
+    font-size: 1.2rem;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.check-icon:hover {
+    transform: scale(1.2);
+    color: #108f5c;
+}
+
+.cancel-icon {
+    color: #de1818bd;
+    font-size: 1.2rem;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.cancel-icon:hover {
+    transform: scale(1.2);
+    color: #de1818f7;
+}
+
+.send-button {
+    background-color: #2a9d8f;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 9999px;
+    /* pill-shaped */
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    margin-left: 0.5rem;
+}
+
+.send-button:hover {
+    background-color: #21867a;
+    transform: scale(1.05);
+}
+
+.send-icon {
+    color: white;
+    font-size: 1.1rem;
+}
+
+#chat-window {
+    width: 50%;
+    margin: auto;
+
+}
+
+.span-text {
+    display: inline-block;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.modal-content {
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    min-width: 320px;
+    text-align: center;
+}
+
+/* .modal-content >  */
+
+.modal-content>h3 {
+    margin-top: 0.5rem;
+}
+
+.modal-content input {
+    padding: 8px 12px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.modal-content button {
+    padding: 8px 14px;
+    background-color: #2a9d8f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.username-btns {
+    display: flex;
+    justify-content: space-evenly;
+}

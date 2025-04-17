@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Management</title>
+</head>
+<body>
+    <h2>User List</h2>
+    <ul id="user-list"></ul>
+
+    <h3>Add User</h3>
+    <input type="text" id="username" placeholder="Name">
+    <button onclick="addUser()">Add</button>
+
+    <script>
+        async function fetchUsers() {
+            const response = await fetch('http://localhost:3000/users');
+            const users = await response.json();
+            const list = document.getElementById('user-list');
+            list.innerHTML = users.map(user => `<li>${user.name}</li>`).join('');
+        }
+
+        async function addUser() {
+            const name = document.getElementById('username').value;
+            if (!name) return alert('Please enter a name');
+            await fetch('http://localhost:3000/users', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name })
+            });
+            fetchUsers();
+        }
+
+        fetchUsers();
+    </script>
+</body>
+</html>
