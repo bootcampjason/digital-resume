@@ -48,6 +48,8 @@ require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
+
+// Attach socket.io to the HTTP server
 const io = new Server(server, {
   cors: {
       origin: 'http://localhost:3000',
@@ -69,25 +71,30 @@ app.get('/', (req, res) => {
 
 let onlineUsers = [];
 
+// Listen for new connections
 io.on('connection', (socket) => {
-
   console.log('🟢 Connected to Socket.io:', socket.id);
 
-  socket.on('new-user-add', (userId) => {
-    if (!onlineUsers.some((onlineUser) => onlineUser.userId === userId)) {
-      console.log(`DEV: pushing ${userId} to onlineUser `)
-      onlineUsers.push({ userId, socketId: socket.id });
+  // Listen for a custom event
+  socket.on('add_new_online_user', ({username, socketId}) => {
+    console.log('onlineUsers', onlineUsers)
+    console.log('socketId', socketId)
+    if (onlineUsers.some((onlineUser) => onlineUser.socketId !== socketId) || !onlineUsers.length) {
+      console.log(`DEV: pushing ${username} to onlineUser `)
+      onlineUsers.push({ username, socketId: socket.id });
+      console.log('Online Users:', onlineUsers);
     }
-    io.emit('get-users', onlineUsers);
+    io.emit('get_users', onlineUsers);
   });
 
   socket.on('disconnect', () => {
     onlineUsers = onlineUsers.filter((user) => user.socketId !== socket.id);
-    io.emit('get-users', onlineUsers);
+    io.emit('get_users', onlineUsers);
     console.log('❌ Disconnected from Socket.io:', socket.id);
   });
 
   socket.on('send_message', (msg) => {
+    console.log('sent message!')
     io.emit('receive_message', msg);
   });
 

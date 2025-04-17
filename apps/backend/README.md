@@ -1,7 +1,6 @@
-This is a test project
+## Backend
 
-## Usage
-Please follow these steps to get your application up and running.
+## Instructions
 
 ### Requirements
 The following packages are required for this script to work.
