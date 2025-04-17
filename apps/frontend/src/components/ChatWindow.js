@@ -28,6 +28,8 @@
  } from 'react-icons/fa';
  import { useSelector, useDispatch } from 'react-redux';
  import { setUser, logout, setMessages } from '../slices/chatSlice';
+ import { socket } from '../socket';
+ console.log('socket', socket)
  
  const API = 'http://localhost:5000/chats';
  
@@ -43,6 +45,9 @@
    const [editingId, setEditingId] = useState(null);
    const [deletingId, setDeletingId] = useState(null);
    const [editText, setEditText] = useState('');
+
+   const [onlineUsers, setOnlineUsers] = useState([]);
+
  
    const handleEditKey = (e, id) => {
      if (e.key === 'Enter') {
@@ -80,7 +85,7 @@
      if (!text || !currentUser) {
        return;
      }
- 
+     socket.emit('send_message');
      const newMessage = { username: currentUser, text };
      await axios.post(API, newMessage);
      setText('');
@@ -108,10 +113,39 @@
      if (saved) dispatch(setUser(saved));
      fetchMessages();
    }, []);
+
+   useEffect(() => {
+    if (currentUser) {
+      socket.emit('add_new_online_user', {
+        username: currentUser,
+        socketId: socket.id
+      });
+    }
+  
+    // Listen for updates
+    socket.on('get_users', (onlineUsers) => {
+      setOnlineUsers(onlineUsers);
+    });
+  
+    return () => {
+      socket.off('get_users');
+    };
+  }, [currentUser]);
+
+  useEffect(() => {
+    // socket.on('get_users', (onlineUsers) => {
+    //   setOnlineUsers(onlineUsers);
+    // });
+  
+    return () => {
+      socket.off('get_users');
+    };
+  }, [currentUser]);
  
    return (
      <div id="chat-window">
        <h2>💬 Live Chat 💬</h2>
+       <p>🟢 {onlineUsers.length} online users</p>
        {!currentUser && (
          <div className="modal-backdrop">
            <div className="modal-content">
@@ -210,7 +244,7 @@
  
        <div
          style={{
-           height: 400,
+           height: "300px",
            overflowY: "scroll",
            border: "1px solid #ccc",
            padding: 10,
